@@ -6,485 +6,433 @@
 <title>New Tab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --rose: #fdf2f0;
-    --text-dark: #332830;
-    --text-mid: #7a6870;
-    --text-soft: #b0a0a8;
-    --text-faint: #cfc0c6;
-    --glass: rgba(255,255,255,0.52);
-    --glass-border: rgba(185,165,175,0.22);
-    --accent: #c4909c;
-    --accent-hover: #b07888;
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --font-serif: 'Copernicus', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-    --font-sans: 'DM Sans', sans-serif;
-  }
+:root {
+  --grad-a: #fdf2f0;
+  --grad-b: #f9ede8;
+  --grad-c: #f4eef5;
+  --grad-d: #eaeff8;
+  --accent: #c4909c;
+  --accent-hover: #b07888;
+  --glass: rgba(255,255,255,0.52);
+  --glass-border: rgba(185,165,175,0.22);
+  --text-dark: #332830;
+  --text-mid: #7a6870;
+  --text-soft: #b0a0a8;
+  --text-faint: #cfc0c6;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --font-serif: 'Copernicus','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --todo-h: 220px;
+  --links-cols: 5;
+  --cal-h: 1fr;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; height: 100%; overflow: hidden; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
 
-  body {
-    font-family: var(--font-sans);
-    background: linear-gradient(140deg, #fdf2f0 0%, #f9ede8 25%, #f4eef5 55%, #eaeff8 100%);
-    color: var(--text-dark);
-    position: relative;
-  }
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(140deg, var(--grad-a) 0%, var(--grad-b) 25%, var(--grad-c) 55%, var(--grad-d) 100%);
+  color: var(--text-dark);
+  position: relative;
+  transition: background 0.4s;
+}
 
-  body::before {
-    content: '';
-    position: fixed;
-    width: 520px; height: 520px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(235,210,220,0.38) 0%, transparent 68%);
-    top: -140px; right: -100px;
-    pointer-events: none; z-index: 0;
-  }
+body::before {
+  content: '';
+  position: fixed;
+  width: 520px; height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(235,210,220,0.38) 0%, transparent 68%);
+  top: -140px; right: -100px;
+  pointer-events: none; z-index: 0;
+}
 
-  body::after {
-    content: '';
-    position: fixed;
-    width: 420px; height: 420px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(195,215,245,0.32) 0%, transparent 68%);
-    bottom: -100px; left: -80px;
-    pointer-events: none; z-index: 0;
-  }
+body::after {
+  content: '';
+  position: fixed;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(195,215,245,0.32) 0%, transparent 68%);
+  bottom: -100px; left: -80px;
+  pointer-events: none; z-index: 0;
+}
 
-  .page {
-    position: relative; z-index: 1;
-    width: 100%; height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    grid-template-rows: auto 1fr;
-    gap: 14px;
-    padding: 28px 32px;
-    overflow: hidden;
-  }
+.page {
+  position: relative; z-index: 1;
+  width: 100%; height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  grid-template-rows: auto 1fr;
+  gap: 14px;
+  padding: 28px 32px;
+  overflow: hidden;
+}
 
-  .card {
-    background: var(--glass);
-    border: 0.5px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 1.1rem 1.4rem;
-    overflow: hidden;
-  }
+.card {
+  background: var(--glass);
+  border: 0.5px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.1rem 1.4rem;
+  overflow: hidden;
+}
 
-  .label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-faint);
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
+.label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
 
-  /* TOP ROW */
-  .top-row {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+/* ── TOP ROW ── */
+.top-row { grid-column: 1/-1; display: flex; flex-direction: column; gap: 12px; }
+.top-main { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 
-  .top-main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-  }
+.clock-block { display: flex; align-items: baseline; gap: 16px; }
 
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.62);
-    border: 0.5px solid var(--glass-border);
-    border-radius: 50px;
-    padding: 0 18px;
-    height: 44px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: border-color 0.15s, background 0.15s;
-  }
+.time {
+  font-family: var(--font-serif);
+  font-size: 62px; line-height: 1;
+  color: var(--text-dark);
+  letter-spacing: -1.5px; font-weight: 400;
+}
 
-  .search-bar:focus-within {
-    border-color: rgba(180,140,160,0.45);
-    background: rgba(255,255,255,0.8);
-  }
+.date { font-size: 13px; color: var(--text-soft); font-weight: 300; }
 
-  .search-icon {
-    color: var(--text-faint);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-  }
+.extra-clocks { display: flex; gap: 18px; margin-left: 4px; align-items: baseline; }
+.extra-clock { display: flex; flex-direction: column; gap: 1px; }
+.extra-clock-time { font-family: var(--font-serif); font-size: 22px; color: var(--text-mid); font-weight: 400; line-height: 1; }
+.extra-clock-label { font-size: 10px; color: var(--text-faint); letter-spacing: 0.06em; }
 
-  .search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text-dark);
-    min-width: 0;
-  }
+.weather-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 0.85rem 1.2rem; min-width: 190px;
+  border-radius: var(--radius-lg);
+}
+.w-icon { font-size: 30px; line-height: 1; }
+.w-info { display: flex; flex-direction: column; gap: 2px; }
+.w-temp { font-family: var(--font-serif); font-size: 24px; color: var(--text-dark); line-height: 1; }
+.w-desc { font-size: 12px; color: var(--text-mid); }
+.w-loc  { font-size: 11px; color: var(--text-faint); font-weight: 300; }
 
-  .search-input::placeholder { color: var(--text-faint); }
+/* ── SEARCH ── */
+.search-bar {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.62);
+  border: 0.5px solid var(--glass-border);
+  border-radius: 50px;
+  padding: 0 18px; height: 44px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.15s, background 0.15s;
+}
+.search-bar:focus-within { border-color: rgba(180,140,160,0.45); background: rgba(255,255,255,0.8); }
+.search-icon { color: var(--text-faint); flex-shrink: 0; display: flex; align-items: center; }
+.search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-family: var(--font-sans); font-size: 14px; color: var(--text-dark); min-width: 0;
+}
+.search-input::placeholder { color: var(--text-faint); }
+.engine-toggle {
+  font-size: 11px; color: var(--text-soft); cursor: pointer;
+  padding: 3px 10px; border-radius: 20px;
+  border: 0.5px solid var(--glass-border);
+  background: rgba(255,255,255,0.5); font-family: var(--font-sans);
+  transition: background 0.14s, color 0.14s; white-space: nowrap; flex-shrink: 0;
+}
+.engine-toggle:hover { background: rgba(255,255,255,0.85); color: var(--accent); }
 
-  .search-engine-toggle {
-    font-size: 11px;
-    color: var(--text-soft);
-    cursor: pointer;
-    padding: 3px 8px;
-    border-radius: 20px;
-    border: 0.5px solid var(--glass-border);
-    background: rgba(255,255,255,0.5);
-    font-family: var(--font-sans);
-    transition: background 0.14s, color 0.14s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+/* ── LEFT COLUMN ── */
+.left-col { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
 
-  .search-engine-toggle:hover { background: rgba(255,255,255,0.85); color: var(--accent); }
+.todo-card { flex-shrink: 0; display: flex; flex-direction: column; }
+.todo-list {
+  overflow-y: auto; display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 10px;
+  height: var(--todo-h);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(180,160,170,0.3) transparent;
+}
 
-  .clock-block { display: flex; align-items: baseline; gap: 16px; }
+.todo-item { display: flex; align-items: flex-start; gap: 9px; padding: 7px 8px; border-radius: var(--radius-sm); transition: background 0.12s; }
+.todo-item:hover { background: rgba(255,255,255,0.5); }
+.todo-check {
+  width: 16px; height: 16px;
+  border: 0.5px solid rgba(180,150,165,0.5);
+  border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; background: rgba(255,255,255,0.4);
+}
+.todo-check.checked { background: var(--accent); border-color: var(--accent); }
+.todo-check.checked::after {
+  content: ''; width: 8px; height: 5px;
+  border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
+  transform: rotate(-45deg) translateY(-1px); display: block;
+}
+.todo-text { flex: 1; font-size: 13.5px; color: var(--text-dark); line-height: 1.5; word-break: break-word; }
+.todo-text.done { text-decoration: line-through; color: var(--text-faint); }
+.todo-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.todo-del { opacity: 0; cursor: pointer; font-size: 15px; color: var(--text-faint); transition: opacity 0.12s, color 0.12s; padding: 1px 4px; flex-shrink: 0; }
+.todo-item:hover .todo-del { opacity: 1; }
+.todo-del:hover { color: var(--accent); }
+.todo-input-row { display: flex; flex-direction: column; gap: 6px; border-top: 0.5px solid var(--glass-border); padding-top: 10px; }
+.todo-input-main { display: flex; align-items: center; gap: 8px; }
+.todo-input {
+  flex: 1; background: rgba(255,255,255,0.45);
+  border: 0.5px solid var(--glass-border); border-radius: var(--radius-sm);
+  padding: 7px 11px; font-family: var(--font-sans); font-size: 13px; color: var(--text-dark); outline: none;
+}
+.todo-input:focus { border-color: rgba(180,140,160,0.55); }
+.todo-input::placeholder { color: var(--text-faint); font-style: italic; }
+.icon-btn {
+  background: rgba(255,255,255,0.45); border: 0.5px solid var(--glass-border);
+  border-radius: 8px; width: 30px; height: 30px; flex-shrink: 0;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-soft); font-size: 14px; transition: color 0.14s, background 0.14s;
+}
+.icon-btn:hover, .icon-btn.active { color: var(--accent); background: rgba(196,144,156,0.12); border-color: rgba(196,144,156,0.3); }
+.pill-btn {
+  font-family: var(--font-sans); font-size: 12px;
+  padding: 6px 16px; border-radius: 20px;
+  border: 0.5px solid rgba(180,140,160,0.4);
+  background: rgba(255,255,255,0.55); color: var(--text-mid);
+  cursor: pointer; font-weight: 500; transition: background 0.15s; white-space: nowrap;
+}
+.pill-btn:hover { background: rgba(255,255,255,0.85); }
+.link-fields { display: none; gap: 6px; }
+.link-fields.open { display: flex; }
+.link-fields input {
+  flex: 1; background: rgba(255,255,255,0.45);
+  border: 0.5px solid var(--glass-border); border-radius: var(--radius-sm);
+  padding: 6px 10px; font-family: var(--font-sans); font-size: 12px; color: var(--text-dark); outline: none;
+}
+.link-fields input::placeholder { color: var(--text-faint); }
+.link-fields input:focus { border-color: rgba(180,140,160,0.55); }
+.empty-hint { font-size: 12px; color: var(--text-faint); font-style: italic; padding: 4px 8px; }
 
-  .time {
-    font-family: var(--font-serif);
-    font-size: 62px;
-    line-height: 1;
-    color: var(--text-dark);
-    letter-spacing: -1.5px;
-    font-weight: 400;
-  }
+/* ── QUICK LINKS ── */
+.links-card { flex-shrink: 0; }
+.links-grid { display: grid; grid-template-columns: repeat(var(--links-cols), 1fr); gap: 8px; }
+.link-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; padding: 8px 6px; border-radius: var(--radius-md); border: 0.5px solid transparent; transition: background 0.14s, border-color 0.14s; text-decoration: none; }
+.link-item:hover { background: rgba(255,255,255,0.62); border-color: var(--glass-border); }
+.link-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #fff; }
+.link-name { font-size: 10px; color: var(--text-mid); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; }
+.add-link-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; padding: 8px 6px; border-radius: var(--radius-md); border: 0.5px dashed rgba(180,160,170,0.38); transition: background 0.14s; }
+.add-link-btn:hover { background: rgba(255,255,255,0.4); }
+.add-icon-c { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.45); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--text-faint); }
+.add-link-label { font-size: 10px; color: var(--text-faint); }
 
-  .date { font-size: 13px; color: var(--text-soft); font-weight: 300; letter-spacing: 0.02em; }
+/* ── RIGHT COLUMN ── */
+.right-col { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.calendar-card { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-nav { display: flex; align-items: center; gap: 8px; }
+.cal-nav-btn { background: rgba(255,255,255,0.45); border: 0.5px solid var(--glass-border); border-radius: 8px; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-mid); font-size: 14px; transition: background 0.13s; }
+.cal-nav-btn:hover { background: rgba(255,255,255,0.75); }
+.cal-month { font-family: var(--font-serif); font-size: 17px; color: var(--text-dark); font-weight: 400; font-style: italic; min-width: 140px; text-align: center; }
+.ical-btn { font-family: var(--font-sans); font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 0.5px solid rgba(180,140,160,0.35); background: rgba(255,255,255,0.5); color: var(--text-soft); cursor: pointer; transition: background 0.14s, color 0.14s; display: inline-flex; align-items: center; gap: 5px; }
+.ical-btn:hover { background: rgba(255,255,255,0.8); color: var(--accent); }
+.ical-btn.connected { color: #4285F4; border-color: rgba(66,133,244,0.3); }
+.cal-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.cal-dot.connected { background: #4285F4; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; flex: 1; }
+.cal-day-name { text-align: center; font-size: 10px; color: var(--text-faint); letter-spacing: 0.08em; text-transform: uppercase; padding-bottom: 6px; font-weight: 500; }
+.cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 12.5px; color: var(--text-mid); border-radius: 8px; cursor: default; transition: background 0.12s; position: relative; }
+.cal-day.other-month { color: var(--text-faint); }
+.cal-day.today { background: var(--accent); color: #fff; font-weight: 500; }
+.cal-day.has-event::after { content: ''; position: absolute; bottom: 2px; width: 4px; height: 4px; border-radius: 50%; background: #4285F4; }
+.cal-day.today.has-event::after { background: rgba(255,255,255,0.8); }
+.cal-day:not(.today):hover { background: rgba(255,255,255,0.6); color: var(--text-dark); }
+.events-section { flex-shrink: 0; margin-top: 10px; border-top: 0.5px solid var(--glass-border); padding-top: 10px; }
+.events-list { display: flex; flex-direction: column; gap: 5px; max-height: 96px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(180,160,170,0.3) transparent; }
+.event-item { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--text-mid); padding: 5px 7px; border-radius: 8px; background: rgba(255,255,255,0.38); }
+.event-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.event-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event-time { color: var(--text-soft); font-size: 11px; white-space: nowrap; }
 
-  .weather-card {
-    display: flex; align-items: center; gap: 14px;
-    padding: 0.85rem 1.2rem; min-width: 190px;
-    border-radius: var(--radius-lg);
-  }
+/* ── COG BUTTON ── */
+.cog-btn {
+  position: fixed; bottom: 22px; right: 22px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  border: 0.5px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-soft); transition: background 0.15s, color 0.15s, transform 0.3s;
+  z-index: 300;
+}
+.cog-btn:hover { background: rgba(255,255,255,0.85); color: var(--accent); }
+.cog-btn.open { transform: rotate(60deg); color: var(--accent); }
 
-  .w-icon { font-size: 30px; line-height: 1; }
-  .w-info { display: flex; flex-direction: column; gap: 2px; }
-  .w-temp { font-family: var(--font-serif); font-size: 24px; color: var(--text-dark); line-height: 1; }
-  .w-desc { font-size: 12px; color: var(--text-mid); }
-  .w-loc  { font-size: 11px; color: var(--text-faint); font-weight: 300; }
+/* ── SETTINGS PANEL ── */
+.settings-panel {
+  position: fixed; top: 0; right: -380px; width: 360px; height: 100vh;
+  background: rgba(253,248,246,0.97);
+  border-left: 0.5px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  z-index: 299;
+  transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.settings-panel.open { right: 0; }
 
-  /* LEFT COLUMN */
-  .left-col { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.settings-header {
+  padding: 22px 22px 14px;
+  border-bottom: 0.5px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.settings-title { font-family: var(--font-serif); font-size: 18px; color: var(--text-dark); font-style: italic; }
+.settings-close { cursor: pointer; color: var(--text-soft); font-size: 20px; line-height: 1; padding: 2px 5px; border-radius: 6px; border: none; background: none; transition: color 0.14s; }
+.settings-close:hover { color: var(--accent); }
 
-  .todo-card { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.settings-body { flex: 1; overflow-y: auto; padding: 16px 22px; display: flex; flex-direction: column; gap: 22px; scrollbar-width: thin; scrollbar-color: rgba(180,160,170,0.3) transparent; }
 
-  .todo-list {
-    flex: 1; overflow-y: auto;
-    display: flex; flex-direction: column; gap: 4px;
-    margin-bottom: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(180,160,170,0.3) transparent;
-  }
+.s-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-faint); font-weight: 500; margin-bottom: 10px; }
 
-  .todo-item {
-    display: flex; align-items: flex-start; gap: 9px;
-    padding: 7px 8px; border-radius: var(--radius-sm);
-    transition: background 0.12s;
-  }
-  .todo-item:hover { background: rgba(255,255,255,0.5); }
+.s-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.s-label { font-size: 13px; color: var(--text-mid); }
+.s-hint { font-size: 11px; color: var(--text-faint); margin-top: -6px; margin-bottom: 4px; }
 
-  .todo-check {
-    width: 16px; height: 16px;
-    border: 0.5px solid rgba(180,150,165,0.5);
-    border-radius: 4px; flex-shrink: 0; margin-top: 2px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s, border-color 0.15s;
-    background: rgba(255,255,255,0.4);
-  }
-  .todo-check.checked { background: var(--accent); border-color: var(--accent); }
-  .todo-check.checked::after {
-    content: ''; width: 8px; height: 5px;
-    border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
-    transform: rotate(-45deg) translateY(-1px); display: block;
-  }
+.s-input {
+  background: rgba(255,255,255,0.7); border: 0.5px solid rgba(185,165,175,0.3);
+  border-radius: var(--radius-sm); padding: 7px 10px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-dark); outline: none; width: 100%;
+}
+.s-input:focus { border-color: rgba(180,140,160,0.55); }
+.s-input::placeholder { color: var(--text-faint); }
 
-  .todo-text { flex: 1; font-size: 13.5px; color: var(--text-dark); line-height: 1.5; word-break: break-word; }
-  .todo-text.done { text-decoration: line-through; color: var(--text-faint); }
-  .todo-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.s-input-inline {
+  background: rgba(255,255,255,0.7); border: 0.5px solid rgba(185,165,175,0.3);
+  border-radius: var(--radius-sm); padding: 6px 10px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-dark); outline: none;
+  width: 130px; flex-shrink: 0;
+}
+.s-input-inline:focus { border-color: rgba(180,140,160,0.55); }
 
-  .todo-del {
-    opacity: 0; cursor: pointer; font-size: 15px; color: var(--text-faint);
-    transition: opacity 0.12s, color 0.12s; line-height: 1; padding: 1px 4px; flex-shrink: 0;
-  }
-  .todo-item:hover .todo-del { opacity: 1; }
-  .todo-del:hover { color: var(--accent); }
+/* color swatch */
+.color-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.swatch-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.swatch-label { font-size: 10px; color: var(--text-faint); }
+input[type=color] { width: 36px; height: 36px; border-radius: 8px; border: 0.5px solid var(--glass-border); cursor: pointer; padding: 2px; background: rgba(255,255,255,0.6); }
 
-  .todo-input-row {
-    display: flex; flex-direction: column; gap: 6px;
-    border-top: 0.5px solid var(--glass-border); padding-top: 10px;
-  }
+/* slider */
+.s-slider { width: 100%; accent-color: var(--accent); }
 
-  .todo-input-main { display: flex; align-items: center; gap: 8px; }
+/* toggle */
+.s-toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+.s-toggle input { opacity: 0; width: 0; height: 0; }
+.s-toggle-track { position: absolute; inset: 0; border-radius: 20px; background: rgba(180,160,170,0.3); cursor: pointer; transition: background 0.2s; }
+.s-toggle input:checked + .s-toggle-track { background: var(--accent); }
+.s-toggle-track::after { content: ''; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: left 0.2s; }
+.s-toggle input:checked + .s-toggle-track::after { left: 19px; }
 
-  .todo-input {
-    flex: 1;
-    background: rgba(255,255,255,0.45);
-    border: 0.5px solid var(--glass-border);
-    border-radius: var(--radius-sm);
-    padding: 7px 11px;
-    font-family: var(--font-sans); font-size: 13px; color: var(--text-dark);
-    outline: none; transition: border-color 0.15s;
-  }
-  .todo-input:focus { border-color: rgba(180,140,160,0.55); }
-  .todo-input::placeholder { color: var(--text-faint); font-style: italic; }
+/* select */
+.s-select {
+  background: rgba(255,255,255,0.7); border: 0.5px solid rgba(185,165,175,0.3);
+  border-radius: var(--radius-sm); padding: 6px 10px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-dark); outline: none;
+  cursor: pointer;
+}
 
-  .icon-btn {
-    background: rgba(255,255,255,0.45);
-    border: 0.5px solid var(--glass-border);
-    border-radius: 8px;
-    width: 30px; height: 30px; flex-shrink: 0;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text-soft); font-size: 14px; transition: color 0.14s, background 0.14s;
-  }
-  .icon-btn:hover, .icon-btn.active { color: var(--accent); background: rgba(196,144,156,0.12); border-color: rgba(196,144,156,0.3); }
+/* links editor */
+.links-editor { display: flex; flex-direction: column; gap: 6px; }
+.link-edit-row { display: flex; align-items: center; gap: 6px; }
+.link-edit-row input { flex: 1; background: rgba(255,255,255,0.7); border: 0.5px solid rgba(185,165,175,0.3); border-radius: 8px; padding: 5px 8px; font-size: 12px; font-family: var(--font-sans); color: var(--text-dark); outline: none; min-width: 0; }
+.link-edit-row input:focus { border-color: rgba(180,140,160,0.55); }
+.link-swatch { width: 22px; height: 22px; border-radius: 5px; border: none; cursor: pointer; padding: 1px; flex-shrink: 0; }
+.link-del-btn { cursor: pointer; color: var(--text-faint); font-size: 16px; line-height: 1; padding: 2px 4px; border: none; background: none; transition: color 0.13s; flex-shrink: 0; }
+.link-del-btn:hover { color: var(--accent); }
+.add-link-small { font-size: 12px; color: var(--accent); cursor: pointer; padding: 4px 0; background: none; border: none; font-family: var(--font-sans); }
 
-  .pill-btn {
-    font-family: var(--font-sans); font-size: 12px;
-    padding: 6px 16px; border-radius: 20px;
-    border: 0.5px solid rgba(180,140,160,0.4);
-    background: rgba(255,255,255,0.55); color: var(--text-mid);
-    cursor: pointer; font-weight: 500; transition: background 0.15s; white-space: nowrap;
-  }
-  .pill-btn:hover { background: rgba(255,255,255,0.85); }
+/* tz rows */
+.tz-rows { display: flex; flex-direction: column; gap: 8px; }
+.tz-row { display: flex; gap: 6px; align-items: center; }
+.tz-row input, .tz-row select { flex: 1; background: rgba(255,255,255,0.7); border: 0.5px solid rgba(185,165,175,0.3); border-radius: 8px; padding: 6px 9px; font-size: 12px; font-family: var(--font-sans); color: var(--text-dark); outline: none; min-width: 0; }
+.tz-del { cursor: pointer; color: var(--text-faint); font-size: 16px; line-height: 1; border: none; background: none; }
+.tz-del:hover { color: var(--accent); }
 
-  .link-fields { display: none; gap: 6px; }
-  .link-fields.open { display: flex; }
+/* save btn */
+.s-save-btn {
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  padding: 10px; border-radius: var(--radius-md); border: none;
+  background: var(--accent); color: #fff; cursor: pointer;
+  transition: background 0.15s; width: 100%; margin-top: 4px;
+}
+.s-save-btn:hover { background: var(--accent-hover); }
 
-  .link-fields input {
-    flex: 1;
-    background: rgba(255,255,255,0.45);
-    border: 0.5px solid var(--glass-border);
-    border-radius: var(--radius-sm);
-    padding: 6px 10px;
-    font-family: var(--font-sans); font-size: 12px; color: var(--text-dark); outline: none;
-  }
-  .link-fields input::placeholder { color: var(--text-faint); }
-  .link-fields input:focus { border-color: rgba(180,140,160,0.55); }
+/* divider */
+.s-divider { height: 0.5px; background: var(--glass-border); }
 
-  /* LINKS */
-  .links-card { flex-shrink: 0; }
-  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
-
-  .link-item {
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    cursor: pointer; padding: 8px 6px; border-radius: var(--radius-md);
-    border: 0.5px solid transparent; transition: background 0.14s, border-color 0.14s;
-    text-decoration: none;
-  }
-  .link-item:hover { background: rgba(255,255,255,0.62); border-color: var(--glass-border); }
-
-  .link-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 500; color: #fff; letter-spacing: 0.02em;
-  }
-  .link-name { font-size: 10px; color: var(--text-mid); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 68px; }
-
-  .add-link-btn {
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    cursor: pointer; padding: 8px 6px; border-radius: var(--radius-md);
-    border: 0.5px dashed rgba(180,160,170,0.38); transition: background 0.14s;
-  }
-  .add-link-btn:hover { background: rgba(255,255,255,0.4); }
-  .add-icon-c {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: rgba(255,255,255,0.45);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; color: var(--text-faint); line-height: 1;
-  }
-  .add-link-label { font-size: 10px; color: var(--text-faint); }
-
-  /* RIGHT COLUMN */
-  .right-col { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
-
-  .calendar-card { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-
-  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-
-  .cal-nav { display: flex; align-items: center; gap: 8px; }
-
-  .cal-nav-btn {
-    background: rgba(255,255,255,0.45);
-    border: 0.5px solid var(--glass-border);
-    border-radius: 8px; width: 26px; height: 26px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text-mid); font-size: 14px; transition: background 0.13s;
-  }
-  .cal-nav-btn:hover { background: rgba(255,255,255,0.75); }
-
-  .cal-month {
-    font-family: var(--font-serif);
-    font-size: 17px; color: var(--text-dark); font-weight: 400; font-style: italic;
-    min-width: 140px; text-align: center;
-  }
-
-  .gcal-btn {
-    font-family: var(--font-sans); font-size: 11px;
-    padding: 4px 12px; border-radius: 20px;
-    border: 0.5px solid rgba(180,140,160,0.35);
-    background: rgba(255,255,255,0.5); color: var(--text-soft);
-    cursor: pointer; transition: background 0.14s, color 0.14s;
-    display: inline-flex; align-items: center; gap: 5px;
-  }
-  .gcal-btn:hover { background: rgba(255,255,255,0.8); color: var(--accent); }
-  .gcal-btn.connected { color: #4285F4; border-color: rgba(66,133,244,0.3); }
-
-  .gcal-dot { width: 7px; height: 7px; border-radius: 50%; background: #4285F4; flex-shrink: 0; }
-
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; flex: 1; }
-
-  .cal-day-name {
-    text-align: center; font-size: 10px; color: var(--text-faint);
-    letter-spacing: 0.08em; text-transform: uppercase; padding-bottom: 6px; font-weight: 500;
-  }
-
-  .cal-day {
-    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-    font-size: 12.5px; color: var(--text-mid); border-radius: 8px;
-    cursor: default; transition: background 0.12s; position: relative; font-weight: 400;
-  }
-  .cal-day.other-month { color: var(--text-faint); }
-  .cal-day.today { background: var(--accent); color: #fff; font-weight: 500; }
-  .cal-day.has-event::after {
-    content: ''; position: absolute; bottom: 2px;
-    width: 4px; height: 4px; border-radius: 50%; background: #4285F4;
-  }
-  .cal-day.today.has-event::after { background: rgba(255,255,255,0.8); }
-  .cal-day:not(.today):hover { background: rgba(255,255,255,0.6); color: var(--text-dark); }
-
-  .events-section { flex-shrink: 0; margin-top: 10px; border-top: 0.5px solid var(--glass-border); padding-top: 10px; }
-
-  .events-list {
-    display: flex; flex-direction: column; gap: 5px;
-    max-height: 96px; overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(180,160,170,0.3) transparent;
-  }
-
-  .event-item {
-    display: flex; align-items: center; gap: 9px;
-    font-size: 12px; color: var(--text-mid);
-    padding: 5px 7px; border-radius: 8px;
-    background: rgba(255,255,255,0.38);
-  }
-  .event-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .event-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .event-time { color: var(--text-soft); font-size: 11px; white-space: nowrap; }
-
-  .empty-hint { font-size: 12px; color: var(--text-faint); font-style: italic; padding: 4px 6px; }
-  .empty-hint a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
-
-  /* MODALS */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(200,180,190,0.3);
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-    align-items: center; justify-content: center; z-index: 200;
-  }
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: rgba(255,252,250,0.97);
-    border: 0.5px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem 1.75rem;
-    width: 310px;
-    display: flex; flex-direction: column; gap: 11px;
-    box-shadow: 0 12px 48px rgba(140,110,120,0.14);
-  }
-
-  .modal-title { font-family: var(--font-serif); font-size: 16px; color: var(--text-dark); font-style: italic; }
-
-  .modal input {
-    background: rgba(245,238,242,0.75);
-    border: 0.5px solid rgba(185,165,175,0.3);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    font-family: var(--font-sans); font-size: 13px; color: var(--text-dark);
-    outline: none; width: 100%; transition: border-color 0.14s;
-  }
-  .modal input:focus { border-color: rgba(180,140,160,0.55); }
-  .modal input::placeholder { color: var(--text-faint); }
-
-  .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
-
-  .btn-cancel {
-    font-family: var(--font-sans); font-size: 12px; padding: 6px 16px;
-    border-radius: 20px; border: 0.5px solid rgba(180,160,170,0.3);
-    background: transparent; color: var(--text-soft); cursor: pointer; font-weight: 500;
-    transition: background 0.14s;
-  }
-  .btn-cancel:hover { background: rgba(255,255,255,0.6); }
-
-  .btn-save {
-    font-family: var(--font-sans); font-size: 12px; padding: 6px 16px;
-    border-radius: 20px; border: none;
-    background: var(--accent); color: #fff;
-    cursor: pointer; font-weight: 500; transition: background 0.14s;
-  }
-  .btn-save:hover { background: var(--accent-hover); }
-
-  .hint-text { font-size: 11px; color: var(--text-faint); line-height: 1.5; }
-  .modal p { font-size: 12.5px; color: var(--text-mid); line-height: 1.6; }
+/* ── MODALS ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(200,180,190,0.3); backdrop-filter: blur(5px); align-items: center; justify-content: center; z-index: 400; }
+.modal-overlay.open { display: flex; }
+.modal { background: rgba(255,252,250,0.97); border: 0.5px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem 1.75rem; width: 310px; display: flex; flex-direction: column; gap: 11px; box-shadow: 0 12px 48px rgba(140,110,120,0.14); }
+.modal-title { font-family: var(--font-serif); font-size: 16px; color: var(--text-dark); font-style: italic; }
+.modal p { font-size: 12.5px; color: var(--text-mid); line-height: 1.6; }
+.modal input { background: rgba(245,238,242,0.75); border: 0.5px solid rgba(185,165,175,0.3); border-radius: var(--radius-sm); padding: 8px 12px; font-family: var(--font-sans); font-size: 13px; color: var(--text-dark); outline: none; width: 100%; }
+.modal input:focus { border-color: rgba(180,140,160,0.55); }
+.modal input::placeholder { color: var(--text-faint); }
+.modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+.btn-cancel { font-family: var(--font-sans); font-size: 12px; padding: 6px 16px; border-radius: 20px; border: 0.5px solid rgba(180,160,170,0.3); background: transparent; color: var(--text-soft); cursor: pointer; font-weight: 500; transition: background 0.14s; }
+.btn-cancel:hover { background: rgba(255,255,255,0.6); }
+.btn-save { font-family: var(--font-sans); font-size: 12px; padding: 6px 16px; border-radius: 20px; border: none; background: var(--accent); color: #fff; cursor: pointer; font-weight: 500; transition: background 0.14s; }
+.btn-save:hover { background: var(--accent-hover); }
+.hint-text { font-size: 11px; color: var(--text-faint); line-height: 1.5; }
 </style>
 </head>
 <body>
 
 <div class="page">
 
+  <!-- TOP ROW -->
   <div class="top-row">
     <div class="top-main">
       <div class="clock-block">
-        <div class="time" id="time">00:00</div>
-        <div class="date" id="date">Sunday, March 15</div>
+        <div>
+          <div class="time" id="time">00:00</div>
+          <div class="date" id="date">Sunday, March 15</div>
+        </div>
+        <div class="extra-clocks" id="extra-clocks"></div>
       </div>
-      <div class="card weather-card">
+      <div class="card weather-card" id="weather-card">
         <div class="w-icon" id="wicon">⛅</div>
         <div class="w-info">
           <div class="w-temp" id="wtemp">—°C</div>
           <div class="w-desc" id="wdesc">Loading…</div>
-          <div class="w-loc">Kremenchuk</div>
+          <div class="w-loc" id="wloc">Kremenchuk</div>
         </div>
       </div>
     </div>
     <div class="search-bar">
       <span class="search-icon">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
           <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
           <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </span>
-      <input class="search-input" id="search-input" type="text" placeholder="Search Google…" autocomplete="off" />
-      <button class="search-engine-toggle" id="engine-toggle">Google</button>
+      <input class="search-input" id="search-input" type="text" placeholder="Search Google…" autocomplete="off" autofocus />
+      <button class="engine-toggle" id="engine-toggle">Google</button>
     </div>
   </div>
 
+  <!-- LEFT COLUMN -->
   <div class="left-col">
-    <div class="card todo-card">
+    <div class="card todo-card" id="todo-card">
       <div class="label">to-do</div>
       <div class="todo-list" id="todo-list"></div>
       <div class="todo-input-row">
         <div class="todo-input-main">
           <input class="todo-input" id="todo-input" type="text" placeholder="Add a task…" maxlength="200" />
           <button class="icon-btn" id="link-toggle" title="Attach a link">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
               <path d="M6.5 9.5a3.536 3.536 0 0 0 5 0l2-2a3.536 3.536 0 0 0-5-5l-1 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               <path d="M9.5 6.5a3.536 3.536 0 0 0-5 0l-2 2a3.536 3.536 0 0 0 5 5l1-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
@@ -498,12 +446,13 @@
       </div>
     </div>
 
-    <div class="card links-card">
+    <div class="card links-card" id="links-card">
       <div class="label">quick links</div>
       <div class="links-grid" id="links-grid"></div>
     </div>
   </div>
 
+  <!-- RIGHT COLUMN -->
   <div class="right-col">
     <div class="card calendar-card">
       <div class="cal-header">
@@ -512,8 +461,8 @@
           <div class="cal-month" id="cal-month">March 2026</div>
           <button class="cal-nav-btn" id="cal-next">&#8250;</button>
         </div>
-        <button class="gcal-btn" id="gcal-btn">
-          <span class="gcal-dot"></span> Google Calendar
+        <button class="ical-btn" id="ical-btn">
+          <span class="cal-dot" id="cal-dot"></span> Calendar
         </button>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
@@ -525,7 +474,132 @@
   </div>
 </div>
 
-<!-- Add Link Modal -->
+<!-- COG -->
+<button class="cog-btn" id="cog-btn" title="Settings">
+  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+    <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+</button>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settings-panel">
+  <div class="settings-header">
+    <div class="settings-title">Settings</div>
+    <button class="settings-close" id="settings-close">×</button>
+  </div>
+  <div class="settings-body">
+
+    <!-- APPEARANCE -->
+    <div>
+      <div class="s-section-title">Appearance</div>
+      <div class="s-row"><span class="s-label">Gradient colors</span></div>
+      <div class="color-row" style="margin-bottom:12px">
+        <div class="swatch-wrap"><input type="color" id="s-grad-a" /><div class="swatch-label">Top left</div></div>
+        <div class="swatch-wrap"><input type="color" id="s-grad-b" /><div class="swatch-label">Mid left</div></div>
+        <div class="swatch-wrap"><input type="color" id="s-grad-c" /><div class="swatch-label">Mid right</div></div>
+        <div class="swatch-wrap"><input type="color" id="s-grad-d" /><div class="swatch-label">Bottom</div></div>
+        <div class="swatch-wrap"><input type="color" id="s-accent" /><div class="swatch-label">Accent</div></div>
+      </div>
+      <div class="s-row">
+        <span class="s-label">Card opacity</span>
+        <input type="range" class="s-slider" id="s-opacity" min="20" max="90" value="52" style="width:120px" />
+      </div>
+      <div class="s-row">
+        <span class="s-label">Font</span>
+        <select class="s-select" id="s-font">
+          <option value="copernicus">Copernicus + DM Sans</option>
+          <option value="playfair">Playfair Display + DM Sans</option>
+          <option value="lora">Lora + DM Sans</option>
+          <option value="fraunces">Fraunces + DM Sans</option>
+          <option value="sans">DM Sans only</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <!-- WIDGETS -->
+    <div>
+      <div class="s-section-title">Widgets</div>
+      <div class="s-row">
+        <span class="s-label">Show weather</span>
+        <label class="s-toggle"><input type="checkbox" id="s-show-weather" checked /><div class="s-toggle-track"></div></label>
+      </div>
+      <div class="s-row">
+        <span class="s-label">Show to-do list</span>
+        <label class="s-toggle"><input type="checkbox" id="s-show-todo" checked /><div class="s-toggle-track"></div></label>
+      </div>
+      <div class="s-row">
+        <span class="s-label">Show quick links</span>
+        <label class="s-toggle"><input type="checkbox" id="s-show-links" checked /><div class="s-toggle-track"></div></label>
+      </div>
+      <div class="s-row">
+        <span class="s-label">Show calendar</span>
+        <label class="s-toggle"><input type="checkbox" id="s-show-cal" checked /><div class="s-toggle-track"></div></label>
+      </div>
+      <div class="s-row">
+        <span class="s-label">To-do list height</span>
+        <input type="range" class="s-slider" id="s-todo-h" min="80" max="400" value="220" style="width:120px" />
+      </div>
+      <div class="s-row">
+        <span class="s-label">Quick links columns</span>
+        <input type="range" class="s-slider" id="s-links-cols" min="3" max="8" value="5" step="1" style="width:120px" />
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <!-- WEATHER -->
+    <div>
+      <div class="s-section-title">Weather</div>
+      <div class="s-row"><span class="s-label">City name</span></div>
+      <input class="s-input" id="s-weather-city" placeholder="e.g. London" style="margin-bottom:8px" />
+      <div class="s-hint">Enter a city and save — coordinates update automatically</div>
+      <div class="s-row">
+        <span class="s-label">Units</span>
+        <select class="s-select" id="s-weather-units">
+          <option value="celsius">°C</option>
+          <option value="fahrenheit">°F</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <!-- TIMEZONES -->
+    <div>
+      <div class="s-section-title">Time zones</div>
+      <div class="s-hint" style="margin-bottom:8px">Primary clock uses your system time. Add extra clocks below.</div>
+      <div class="tz-rows" id="tz-rows"></div>
+      <button class="add-link-small" id="add-tz-btn">+ Add time zone</button>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <!-- CALENDAR -->
+    <div>
+      <div class="s-section-title">Calendar — iCal feed</div>
+      <div class="s-hint" style="margin-bottom:8px">In Google Calendar → Settings → your calendar → "Secret address in iCal format". Paste the .ics URL below.</div>
+      <input class="s-input" id="s-ical-url" placeholder="https://calendar.google.com/calendar/ical/…" style="margin-bottom:6px" />
+      <div class="s-hint">Works with any calendar app that exports iCal (Apple, Outlook, Fastmail…)</div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <!-- QUICK LINKS EDITOR -->
+    <div>
+      <div class="s-section-title">Quick links</div>
+      <div class="links-editor" id="links-editor"></div>
+      <button class="add-link-small" id="add-link-settings-btn">+ Add link</button>
+    </div>
+
+    <button class="s-save-btn" id="s-save-btn">Save settings</button>
+
+  </div>
+</div>
+
+<!-- Add link modal (from + button) -->
 <div class="modal-overlay" id="link-modal">
   <div class="modal">
     <div class="modal-title">Add quick link</div>
@@ -538,286 +612,520 @@
   </div>
 </div>
 
-<!-- Google Calendar Modal -->
-<div class="modal-overlay" id="gcal-modal">
+<!-- iCal connect modal -->
+<div class="modal-overlay" id="ical-modal">
   <div class="modal">
-    <div class="modal-title">Connect Google Calendar</div>
-    <p>Enter your Calendar ID and a Google API key to pull upcoming events.</p>
-    <input type="text" id="gcal-cal-id" placeholder="Calendar ID (e.g. you@gmail.com)" />
-    <input type="text" id="gcal-api-key" placeholder="Google API Key" />
-    <div class="hint-text">Get a free API key at <strong>console.cloud.google.com</strong> → Enable Calendar API → Create credentials</div>
+    <div class="modal-title">Connect calendar</div>
+    <p>Paste your iCal (.ics) secret URL from Google Calendar, Apple Calendar, Outlook, or any calendar app.</p>
+    <input type="text" id="ical-url-input" placeholder="https://calendar.google.com/calendar/ical/…" />
+    <div class="hint-text">Google Calendar → Settings → your calendar name → "Secret address in iCal format"</div>
     <div class="modal-btns">
-      <button class="btn-cancel" id="gcal-modal-cancel">Cancel</button>
-      <button class="btn-save" id="gcal-modal-save">Connect</button>
+      <button class="btn-cancel" id="ical-modal-cancel">Cancel</button>
+      <button class="btn-save" id="ical-modal-save">Connect</button>
     </div>
   </div>
 </div>
 
 <script>
-function ls(k, fb) { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; } catch { return fb; } }
-function ss(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+/* ════════════════════════════
+   STORAGE
+════════════════════════════ */
+function ls(k,fb){ try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):fb;}catch{return fb;} }
+function ss(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 
-/* SEARCH */
+/* ════════════════════════════
+   SETTINGS STATE
+════════════════════════════ */
+const DEFAULTS = {
+  gradA:'#fdf2f0', gradB:'#f9ede8', gradC:'#f4eef5', gradD:'#eaeff8',
+  accent:'#c4909c', opacity:52,
+  font:'copernicus',
+  showWeather:true, showTodo:true, showLinks:true, showCal:true,
+  todoH:220, linksCols:5,
+  weatherCity:'Kremenchuk', weatherLat:49.07, weatherLon:33.42, weatherUnits:'celsius',
+  extraTz:[],
+  icalUrl:'',
+};
+let cfg = Object.assign({}, DEFAULTS, ls('nt_cfg', {}));
+
+/* ════════════════════════════
+   APPLY SETTINGS TO PAGE
+════════════════════════════ */
+const FONT_MAP = {
+  copernicus: { url:"https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap", serif:"'Copernicus','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif" },
+  playfair:   { url:"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap", serif:"'Playfair Display',Georgia,serif" },
+  lora:       { url:"https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap", serif:"'Lora',Georgia,serif" },
+  fraunces:   { url:"https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap", serif:"'Fraunces',Georgia,serif" },
+  sans:       { url:"https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap", serif:"'DM Sans',sans-serif" },
+};
+
+function applySettings() {
+  const r = document.documentElement.style;
+  r.setProperty('--grad-a', cfg.gradA);
+  r.setProperty('--grad-b', cfg.gradB);
+  r.setProperty('--grad-c', cfg.gradC);
+  r.setProperty('--grad-d', cfg.gradD);
+  r.setProperty('--accent', cfg.accent);
+  r.setProperty('--accent-hover', shadeColor(cfg.accent, -15));
+  r.setProperty('--glass', `rgba(255,255,255,${(cfg.opacity/100).toFixed(2)})`);
+  r.setProperty('--todo-h', cfg.todoH + 'px');
+  r.setProperty('--links-cols', cfg.linksCols);
+  const fm = FONT_MAP[cfg.font] || FONT_MAP.copernicus;
+  document.getElementById('font-link').href = fm.url;
+  r.setProperty('--font-serif', fm.serif);
+  document.getElementById('weather-card').style.display = cfg.showWeather ? '' : 'none';
+  document.getElementById('todo-card').style.display = cfg.showTodo ? '' : 'none';
+  document.getElementById('links-card').style.display = cfg.showLinks ? '' : 'none';
+  document.querySelector('.right-col').style.display = cfg.showCal ? '' : 'none';
+  document.getElementById('wloc').textContent = cfg.weatherCity;
+}
+
+function shadeColor(hex, pct) {
+  const n = parseInt(hex.replace('#',''),16);
+  const r = Math.min(255,Math.max(0,(n>>16)+pct));
+  const g = Math.min(255,Math.max(0,((n>>8)&0xff)+pct));
+  const b = Math.min(255,Math.max(0,(n&0xff)+pct));
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+
+applySettings();
+
+/* ════════════════════════════
+   SEARCH
+════════════════════════════ */
 const ENGINES = [
-  { name: 'Google',    url: 'https://www.google.com/search?q=' },
-  { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
-  { name: 'Bing',      url: 'https://www.bing.com/search?q=' },
+  {name:'Google',    url:'https://www.google.com/search?q='},
+  {name:'DuckDuckGo',url:'https://duckduckgo.com/?q='},
+  {name:'Bing',      url:'https://www.bing.com/search?q='},
 ];
 let engineIdx = ls('nt_engine', 0);
+const engBtn = document.getElementById('engine-toggle');
+const srchIn = document.getElementById('search-input');
+engBtn.textContent = ENGINES[engineIdx].name;
+srchIn.placeholder = 'Search ' + ENGINES[engineIdx].name + '…';
 
-const engineToggle = document.getElementById('engine-toggle');
-const searchInput  = document.getElementById('search-input');
-
-engineToggle.textContent = ENGINES[engineIdx].name;
-
-engineToggle.addEventListener('click', () => {
-  engineIdx = (engineIdx + 1) % ENGINES.length;
+engBtn.addEventListener('click', () => {
+  engineIdx = (engineIdx+1) % ENGINES.length;
   ss('nt_engine', engineIdx);
-  engineToggle.textContent = ENGINES[engineIdx].name;
-  searchInput.placeholder = 'Search ' + ENGINES[engineIdx].name + '…';
-  searchInput.focus();
+  engBtn.textContent = ENGINES[engineIdx].name;
+  srchIn.placeholder = 'Search ' + ENGINES[engineIdx].name + '…';
+  srchIn.focus();
 });
 
-searchInput.placeholder = 'Search ' + ENGINES[engineIdx].name + '…';
-
-searchInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    const q = searchInput.value.trim();
-    if (!q) return;
-    // If it looks like a URL, navigate directly
-    if (/^https?:\/\//.test(q) || /^[\w-]+\.[\w]{2,}(\/|$)/.test(q)) {
-      window.location.href = /^https?:\/\//.test(q) ? q : 'https://' + q;
-    } else {
-      window.location.href = ENGINES[engineIdx].url + encodeURIComponent(q);
-    }
-  }
+srchIn.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const q = srchIn.value.trim(); if (!q) return;
+  window.location.href = /^https?:\/\//.test(q) ? q
+    : /^[\w-]+\.[\w]{2,}(\/|$)/.test(q) ? 'https://'+q
+    : ENGINES[engineIdx].url + encodeURIComponent(q);
 });
 
-/* CLOCK */
+window.addEventListener('load', () => { srchIn.focus(); });
+
+/* ════════════════════════════
+   CLOCK
+════════════════════════════ */
 function updateClock() {
   const n = new Date();
-  document.getElementById('time').textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('time').textContent = String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('date').textContent = `${days[n.getDay()]}, ${months[n.getMonth()]} ${n.getDate()}`;
+  renderExtraClocks();
 }
-updateClock(); setInterval(updateClock, 10000);
 
-/* WEATHER */
-(async () => {
+function renderExtraClocks() {
+  const ec = document.getElementById('extra-clocks');
+  ec.innerHTML = '';
+  (cfg.extraTz||[]).forEach(tz => {
+    if (!tz.zone) return;
+    try {
+      const t = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:tz.zone});
+      const d = document.createElement('div'); d.className='extra-clock';
+      d.innerHTML = `<div class="extra-clock-time">${t}</div><div class="extra-clock-label">${tz.label||tz.zone}</div>`;
+      ec.appendChild(d);
+    } catch {}
+  });
+}
+
+updateClock();
+setInterval(updateClock, 10000);
+
+/* ════════════════════════════
+   WEATHER
+════════════════════════════ */
+const W_ICONS = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'❄️',80:'🌦',81:'🌧',82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
+const W_DESCS = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Moderate rain',65:'Heavy rain',71:'Light snow',73:'Moderate snow',75:'Heavy snow',80:'Showers',81:'Rain showers',82:'Heavy showers',95:'Thunderstorm',96:'Hail storm',99:'Heavy hail'};
+
+async function loadWeather() {
   try {
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=49.07&longitude=33.42&current_weather=true&forecast_days=1');
+    const units = cfg.weatherUnits === 'fahrenheit' ? '&temperature_unit=fahrenheit' : '';
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${cfg.weatherLat}&longitude=${cfg.weatherLon}&current_weather=true&forecast_days=1${units}`);
     const d = await r.json(); const cw = d.current_weather;
-    const icons = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'🌨',73:'🌨',75:'❄️',80:'🌦',81:'🌧',82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
-    const descs = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Moderate rain',65:'Heavy rain',71:'Light snow',73:'Moderate snow',75:'Heavy snow',80:'Showers',81:'Rain showers',82:'Heavy showers',95:'Thunderstorm',96:'Hail storm',99:'Heavy hail'};
-    document.getElementById('wtemp').textContent = Math.round(cw.temperature) + '°C';
-    document.getElementById('wdesc').textContent = descs[cw.weathercode] || 'Partly cloudy';
-    document.getElementById('wicon').textContent = icons[cw.weathercode] || '⛅';
+    const sym = cfg.weatherUnits === 'fahrenheit' ? '°F' : '°C';
+    document.getElementById('wtemp').textContent = Math.round(cw.temperature) + sym;
+    document.getElementById('wdesc').textContent = W_DESCS[cw.weathercode] || 'Partly cloudy';
+    document.getElementById('wicon').textContent = W_ICONS[cw.weathercode] || '⛅';
   } catch { document.getElementById('wdesc').textContent = 'Unavailable'; }
-})();
+}
 
-/* TO-DO */
+async function geocodeCity(city) {
+  const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+  const d = await r.json();
+  if (d.results && d.results[0]) return { lat: d.results[0].latitude, lon: d.results[0].longitude, name: d.results[0].name };
+  return null;
+}
+
+loadWeather();
+
+/* ════════════════════════════
+   TO-DO
+════════════════════════════ */
 let todos = ls('nt_todos', []);
 
 function renderTodos() {
   const list = document.getElementById('todo-list');
   list.innerHTML = '';
-  if (!todos.length) {
-    list.innerHTML = '<div class="empty-hint">Nothing here yet — add a task below</div>';
-    return;
-  }
-  todos.forEach((t, i) => {
-    const row = document.createElement('div');
-    row.className = 'todo-item';
-    const chk = document.createElement('div');
-    chk.className = 'todo-check' + (t.done ? ' checked' : '');
-    chk.addEventListener('click', () => { todos[i].done = !todos[i].done; ss('nt_todos', todos); renderTodos(); });
-    const txt = document.createElement('div');
-    txt.className = 'todo-text' + (t.done ? ' done' : '');
+  if (!todos.length) { list.innerHTML='<div class="empty-hint">Nothing here yet</div>'; return; }
+  todos.forEach((t,i) => {
+    const row = document.createElement('div'); row.className='todo-item';
+    const chk = document.createElement('div'); chk.className='todo-check'+(t.done?' checked':'');
+    chk.addEventListener('click',()=>{ todos[i].done=!todos[i].done; ss('nt_todos',todos); renderTodos(); });
+    const txt = document.createElement('div'); txt.className='todo-text'+(t.done?' done':'');
     if (t.link) {
-      if (t.text) txt.appendChild(document.createTextNode(t.text + ' '));
-      const a = document.createElement('a');
-      a.href = t.link; a.textContent = t.linkLabel || t.link; a.target = '_blank';
+      if (t.text) txt.appendChild(document.createTextNode(t.text+' '));
+      const a=document.createElement('a'); a.href=t.link; a.textContent=t.linkLabel||t.link; a.target='_blank';
       txt.appendChild(a);
-    } else {
-      txt.textContent = t.text;
-    }
-    const del = document.createElement('span');
-    del.className = 'todo-del'; del.textContent = '×';
-    del.addEventListener('click', () => { todos.splice(i,1); ss('nt_todos',todos); renderTodos(); });
+    } else { txt.textContent = t.text; }
+    const del=document.createElement('span'); del.className='todo-del'; del.textContent='×';
+    del.addEventListener('click',()=>{ todos.splice(i,1); ss('nt_todos',todos); renderTodos(); });
     row.appendChild(chk); row.appendChild(txt); row.appendChild(del);
     list.appendChild(row);
   });
 }
-
 renderTodos();
 
-let linkMode = false;
-document.getElementById('link-toggle').addEventListener('click', () => {
-  linkMode = !linkMode;
-  document.getElementById('link-toggle').classList.toggle('active', linkMode);
-  document.getElementById('link-fields').classList.toggle('open', linkMode);
-  if (linkMode) document.getElementById('link-text').focus();
+let linkMode=false;
+document.getElementById('link-toggle').addEventListener('click',()=>{
+  linkMode=!linkMode;
+  document.getElementById('link-toggle').classList.toggle('active',linkMode);
+  document.getElementById('link-fields').classList.toggle('open',linkMode);
+  if(linkMode) document.getElementById('link-text').focus();
 });
 
 function addTodo() {
-  const text = document.getElementById('todo-input').value.trim();
-  const lbl  = document.getElementById('link-text').value.trim();
-  const url  = document.getElementById('link-url').value.trim();
-  if (!text && !lbl) return;
-  const item = { done: false, text };
-  if (linkMode && lbl && url) {
-    item.link = /^https?:\/\//.test(url) ? url : 'https://' + url;
-    item.linkLabel = lbl;
-  }
-  todos.push(item); ss('nt_todos', todos); renderTodos();
-  document.getElementById('todo-input').value = '';
-  document.getElementById('link-text').value = '';
-  document.getElementById('link-url').value = '';
-  if (linkMode) {
-    linkMode = false;
-    document.getElementById('link-toggle').classList.remove('active');
-    document.getElementById('link-fields').classList.remove('open');
-  }
+  const text=document.getElementById('todo-input').value.trim();
+  const lbl=document.getElementById('link-text').value.trim();
+  const url=document.getElementById('link-url').value.trim();
+  if(!text&&!lbl) return;
+  const item={done:false,text};
+  if(linkMode&&lbl&&url){ item.link=/^https?:\/\//.test(url)?url:'https://'+url; item.linkLabel=lbl; }
+  todos.push(item); ss('nt_todos',todos); renderTodos();
+  document.getElementById('todo-input').value='';
+  document.getElementById('link-text').value='';
+  document.getElementById('link-url').value='';
+  if(linkMode){ linkMode=false; document.getElementById('link-toggle').classList.remove('active'); document.getElementById('link-fields').classList.remove('open'); }
   document.getElementById('todo-input').focus();
 }
+document.getElementById('todo-add').addEventListener('click',addTodo);
+document.getElementById('todo-input').addEventListener('keydown',e=>{ if(e.key==='Enter') addTodo(); });
 
-document.getElementById('todo-add').addEventListener('click', addTodo);
-document.getElementById('todo-input').addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
-
-/* QUICK LINKS */
-const DEFAULT_LINKS = [
-  { name:'Gmail',    url:'https://mail.google.com',       color:'#e06060' },
-  { name:'YouTube',  url:'https://youtube.com',           color:'#e05050' },
-  { name:'Calendar', url:'https://calendar.google.com',   color:'#5b8dd9' },
-  { name:'Claude',   url:'https://claude.ai',             color:'#a070c0' },
-  { name:'Maps',     url:'https://maps.google.com',       color:'#50a878' },
+/* ════════════════════════════
+   QUICK LINKS
+════════════════════════════ */
+const DEFAULT_LINKS=[
+  {name:'Gmail',url:'https://mail.google.com',color:'#e06060'},
+  {name:'YouTube',url:'https://youtube.com',color:'#e05050'},
+  {name:'Calendar',url:'https://calendar.google.com',color:'#5b8dd9'},
+  {name:'Claude',url:'https://claude.ai',color:'#a070c0'},
+  {name:'Maps',url:'https://maps.google.com',color:'#50a878'},
 ];
-const COLORS = ['#e06060','#5b8dd9','#a070c0','#50a878','#d4885a','#5baec0','#c070a0','#e0904a','#7a8dd9'];
-const ini = n => n.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+const COLORS=['#e06060','#5b8dd9','#a070c0','#50a878','#d4885a','#5baec0','#c070a0','#e0904a','#7a8dd9'];
+const ini=n=>n.trim().split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
 
 function renderLinks() {
-  const links = ls('nt_links', DEFAULT_LINKS);
-  const g = document.getElementById('links-grid');
-  g.innerHTML = '';
-  links.forEach(l => {
-    const a = document.createElement('a'); a.className = 'link-item'; a.href = l.url;
-    a.innerHTML = `<div class="link-icon" style="background:${l.color}">${ini(l.name)}</div><div class="link-name">${l.name}</div>`;
+  const links=ls('nt_links',DEFAULT_LINKS);
+  const g=document.getElementById('links-grid'); g.innerHTML='';
+  links.forEach(l=>{
+    const a=document.createElement('a'); a.className='link-item'; a.href=l.url;
+    a.innerHTML=`<div class="link-icon" style="background:${l.color}">${ini(l.name)}</div><div class="link-name">${l.name}</div>`;
     g.appendChild(a);
   });
-  const add = document.createElement('div'); add.className = 'add-link-btn';
-  add.innerHTML = `<div class="add-icon-c">+</div><div class="add-link-label">Add</div>`;
-  add.addEventListener('click', () => document.getElementById('link-modal').classList.add('open'));
+  const add=document.createElement('div'); add.className='add-link-btn';
+  add.innerHTML=`<div class="add-icon-c">+</div><div class="add-link-label">Add</div>`;
+  add.addEventListener('click',()=>document.getElementById('link-modal').classList.add('open'));
   g.appendChild(add);
 }
-
 renderLinks();
 
-document.getElementById('link-modal-cancel').addEventListener('click', () => document.getElementById('link-modal').classList.remove('open'));
-document.getElementById('link-modal').addEventListener('click', e => { if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
-document.getElementById('link-modal-save').addEventListener('click', () => {
-  const name = document.getElementById('modal-name').value.trim();
-  let url = document.getElementById('modal-url').value.trim();
-  if (!name || !url) return;
-  if (!/^https?:\/\//.test(url)) url = 'https://' + url;
-  const links = ls('nt_links', DEFAULT_LINKS);
-  links.push({ name, url, color: COLORS[links.length % COLORS.length] });
-  ss('nt_links', links); renderLinks();
+document.getElementById('link-modal-cancel').addEventListener('click',()=>document.getElementById('link-modal').classList.remove('open'));
+document.getElementById('link-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('link-modal-save').addEventListener('click',()=>{
+  const name=document.getElementById('modal-name').value.trim();
+  let url=document.getElementById('modal-url').value.trim();
+  if(!name||!url) return;
+  if(!/^https?:\/\//.test(url)) url='https://'+url;
+  const links=ls('nt_links',DEFAULT_LINKS);
+  links.push({name,url,color:COLORS[links.length%COLORS.length]});
+  ss('nt_links',links); renderLinks();
   document.getElementById('link-modal').classList.remove('open');
-  document.getElementById('modal-name').value = '';
-  document.getElementById('modal-url').value = '';
+  document.getElementById('modal-name').value='';
+  document.getElementById('modal-url').value='';
 });
 
-/* CALENDAR */
-let calDate = new Date();
-const DNAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-const MNAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+/* ════════════════════════════
+   CALENDAR
+════════════════════════════ */
+let calDate=new Date();
+const DNAMES=['Su','Mo','Tu','We','Th','Fr','Sa'];
+const MNAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 function renderCalendar() {
-  const yr = calDate.getFullYear(), mo = calDate.getMonth();
-  const today = new Date();
-  document.getElementById('cal-month').textContent = MNAMES[mo] + ' ' + yr;
-  const grid = document.getElementById('cal-grid');
-  grid.innerHTML = '';
-  DNAMES.forEach(d => { const el=document.createElement('div'); el.className='cal-day-name'; el.textContent=d; grid.appendChild(el); });
-  const firstDay = new Date(yr,mo,1).getDay();
-  const dim = new Date(yr,mo+1,0).getDate();
-  const prevDim = new Date(yr,mo,0).getDate();
-  const events = ls('nt_gcal_events', []);
-  const eDays = new Set(events.filter(e=>{ const d=new Date(e.start); return d.getFullYear()===yr&&d.getMonth()===mo; }).map(e=>new Date(e.start).getDate()));
-  for(let i=0;i<firstDay;i++){ const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=prevDim-firstDay+1+i; grid.appendChild(el); }
+  const yr=calDate.getFullYear(),mo=calDate.getMonth(),today=new Date();
+  document.getElementById('cal-month').textContent=MNAMES[mo]+' '+yr;
+  const grid=document.getElementById('cal-grid'); grid.innerHTML='';
+  DNAMES.forEach(d=>{ const e=document.createElement('div'); e.className='cal-day-name'; e.textContent=d; grid.appendChild(e); });
+  const firstDay=new Date(yr,mo,1).getDay();
+  const dim=new Date(yr,mo+1,0).getDate();
+  const prevDim=new Date(yr,mo,0).getDate();
+  const events=ls('nt_ical_events',[]);
+  const eDays=new Set(events.filter(e=>{ const d=new Date(e.start); return d.getFullYear()===yr&&d.getMonth()===mo; }).map(e=>new Date(e.start).getDate()));
+  for(let i=0;i<firstDay;i++){ const e=document.createElement('div'); e.className='cal-day other-month'; e.textContent=prevDim-firstDay+1+i; grid.appendChild(e); }
   for(let d=1;d<=dim;d++){
-    const el=document.createElement('div');
+    const e=document.createElement('div');
     let cls='cal-day';
     if(d===today.getDate()&&mo===today.getMonth()&&yr===today.getFullYear()) cls+=' today';
     if(eDays.has(d)) cls+=' has-event';
-    el.className=cls; el.textContent=d; grid.appendChild(el);
+    e.className=cls; e.textContent=d; grid.appendChild(e);
   }
   const rem=42-firstDay-dim;
-  for(let d=1;d<=rem;d++){ const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=d; grid.appendChild(el); }
+  for(let d=1;d<=rem;d++){ const e=document.createElement('div'); e.className='cal-day other-month'; e.textContent=d; grid.appendChild(e); }
 }
-
 renderCalendar();
+
 document.getElementById('cal-prev').addEventListener('click',()=>{ calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1); renderCalendar(); });
 document.getElementById('cal-next').addEventListener('click',()=>{ calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1); renderCalendar(); });
 
-/* GOOGLE CALENDAR */
-function openGCalModal() {
-  const c = ls('nt_gcal_creds', null);
-  if(c){ document.getElementById('gcal-cal-id').value=c.calId||''; document.getElementById('gcal-api-key').value=c.apiKey||''; }
-  document.getElementById('gcal-modal').classList.add('open');
+/* iCal parser */
+function parseIcal(text) {
+  const events=[];
+  const blocks=text.split('BEGIN:VEVENT');
+  blocks.slice(1).forEach(block=>{
+    const get=k=>{ const m=block.match(new RegExp(k+'[^:]*:([^\r\n]+')); return m?m[1].trim():''; };
+    const title=get('SUMMARY')||'Event';
+    const startRaw=get('DTSTART')||get('DTSTART;[^:]*');
+    if(!startRaw) return;
+    let start;
+    if(startRaw.length===8) { start=new Date(startRaw.slice(0,4)+'-'+startRaw.slice(4,6)+'-'+startRaw.slice(6,8)); }
+    else { start=new Date(startRaw.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/,'$1-$2-$3T$4:$5:$6')); }
+    if(!isNaN(start)) events.push({title,start:start.toISOString()});
+  });
+  return events;
 }
 
-document.getElementById('gcal-btn').addEventListener('click', openGCalModal);
-document.getElementById('gcal-modal-cancel').addEventListener('click', ()=>document.getElementById('gcal-modal').classList.remove('open'));
-document.getElementById('gcal-modal').addEventListener('click', e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
-
-document.getElementById('gcal-modal-save').addEventListener('click', async () => {
-  const calId = document.getElementById('gcal-cal-id').value.trim();
-  const apiKey = document.getElementById('gcal-api-key').value.trim();
-  if(!calId||!apiKey) return;
-  ss('nt_gcal_creds',{calId,apiKey});
-  document.getElementById('gcal-modal').classList.remove('open');
-  document.getElementById('gcal-btn').classList.add('connected');
-  await fetchGCal(calId,apiKey);
-});
-
-async function fetchGCal(calId,apiKey) {
-  const el = document.getElementById('events-list');
-  el.innerHTML = '<div class="empty-hint">Loading events…</div>';
+async function fetchIcal(url) {
   try {
-    const now = new Date().toISOString();
-    const end = new Date(Date.now()+14*24*3600*1000).toISOString();
-    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events?key=${apiKey}&timeMin=${now}&timeMax=${end}&singleEvents=true&orderBy=startTime&maxResults=20`;
-    const r = await fetch(url); const d = await r.json();
-    if(d.error){ el.innerHTML=`<div class="empty-hint" style="color:#c06060">Error: ${d.error.message}</div>`; return; }
-    const items = (d.items||[]).map(e=>({ title:e.summary||'Untitled', start:e.start.dateTime||e.start.date, color:'#4285F4' }));
-    ss('nt_gcal_events',items); renderEvents(items); renderCalendar();
-  } catch { el.innerHTML='<div class="empty-hint" style="color:#c06060">Could not load events</div>'; }
+    document.getElementById('events-list').innerHTML='<div class="empty-hint">Loading…</div>';
+    const proxy='https://api.allorigins.win/raw?url='+encodeURIComponent(url);
+    const r=await fetch(proxy);
+    if(!r.ok) throw new Error('fetch failed');
+    const text=await r.text();
+    const events=parseIcal(text);
+    const now=Date.now();
+    const upcoming=events.filter(e=>new Date(e.start)>=new Date(now-86400000)).sort((a,b)=>new Date(a.start)-new Date(b.start));
+    ss('nt_ical_events',upcoming);
+    renderEvents(upcoming);
+    renderCalendar();
+    document.getElementById('cal-dot').classList.add('connected');
+    document.getElementById('ical-btn').classList.add('connected');
+  } catch(err) {
+    document.getElementById('events-list').innerHTML='<div class="empty-hint" style="color:#c06060">Could not load calendar — check the URL</div>';
+  }
 }
 
 function renderEvents(items) {
-  const el = document.getElementById('events-list');
-  if(!items||!items.length){
-    el.innerHTML='<div class="empty-hint">No upcoming events in the next 2 weeks</div>';
-    return;
-  }
+  const el=document.getElementById('events-list');
+  if(!items||!items.length){ el.innerHTML='<div class="empty-hint">No upcoming events</div>'; return; }
   el.innerHTML='';
   items.slice(0,6).forEach(ev=>{
-    const d = new Date(ev.start);
-    const ts = ev.start.includes('T')
-      ? d.toLocaleDateString('en-GB',{weekday:'short',month:'short',day:'numeric'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
-      : d.toLocaleDateString('en-GB',{weekday:'short',month:'short',day:'numeric'});
+    const d=new Date(ev.start);
+    const isAllDay=ev.start.length===10||ev.start.endsWith('T00:00:00.000Z')&&!ev.start.includes('T');
+    const ts=isAllDay
+      ? d.toLocaleDateString('en-GB',{weekday:'short',month:'short',day:'numeric'})
+      : d.toLocaleDateString('en-GB',{weekday:'short',month:'short',day:'numeric'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
     const row=document.createElement('div'); row.className='event-item';
-    row.innerHTML=`<div class="event-dot" style="background:${ev.color}"></div><div class="event-title">${ev.title}</div><div class="event-time">${ts}</div>`;
+    row.innerHTML=`<div class="event-dot" style="background:#4285F4"></div><div class="event-title">${ev.title}</div><div class="event-time">${ts}</div>`;
     el.appendChild(row);
   });
 }
 
-/* init */
-const creds = ls('nt_gcal_creds',null);
-if(creds){ fetchGCal(creds.calId,creds.apiKey); document.getElementById('gcal-btn').classList.add('connected'); }
-else { document.getElementById('events-list').innerHTML='<div class="empty-hint">Click <a onclick="openGCalModal()">Google Calendar</a> to connect</div>'; }
+/* iCal modal (from calendar button) */
+document.getElementById('ical-btn').addEventListener('click',()=>{
+  if(cfg.icalUrl) document.getElementById('ical-url-input').value=cfg.icalUrl;
+  document.getElementById('ical-modal').classList.add('open');
+});
+document.getElementById('ical-modal-cancel').addEventListener('click',()=>document.getElementById('ical-modal').classList.remove('open'));
+document.getElementById('ical-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('ical-modal-save').addEventListener('click',async()=>{
+  const url=document.getElementById('ical-url-input').value.trim();
+  if(!url) return;
+  cfg.icalUrl=url; ss('nt_cfg',cfg);
+  document.getElementById('ical-modal').classList.remove('open');
+  await fetchIcal(url);
+});
+
+/* Auto-load */
+if(cfg.icalUrl) {
+  fetchIcal(cfg.icalUrl);
+  document.getElementById('cal-dot').classList.add('connected');
+  document.getElementById('ical-btn').classList.add('connected');
+} else {
+  const cached=ls('nt_ical_events',null);
+  if(cached) { renderEvents(cached); renderCalendar(); }
+  else document.getElementById('events-list').innerHTML='<div class="empty-hint">Click "Calendar" above to connect your iCal feed</div>';
+}
+
+/* ════════════════════════════
+   SETTINGS PANEL
+════════════════════════════ */
+const cogBtn=document.getElementById('cog-btn');
+const panel=document.getElementById('settings-panel');
+
+cogBtn.addEventListener('click',()=>{
+  const open=panel.classList.toggle('open');
+  cogBtn.classList.toggle('open',open);
+  if(open) populateSettings();
+});
+document.getElementById('settings-close').addEventListener('click',()=>{
+  panel.classList.remove('open'); cogBtn.classList.remove('open');
+});
+
+function populateSettings() {
+  document.getElementById('s-grad-a').value=cfg.gradA;
+  document.getElementById('s-grad-b').value=cfg.gradB;
+  document.getElementById('s-grad-c').value=cfg.gradC;
+  document.getElementById('s-grad-d').value=cfg.gradD;
+  document.getElementById('s-accent').value=cfg.accent;
+  document.getElementById('s-opacity').value=cfg.opacity;
+  document.getElementById('s-font').value=cfg.font;
+  document.getElementById('s-show-weather').checked=cfg.showWeather;
+  document.getElementById('s-show-todo').checked=cfg.showTodo;
+  document.getElementById('s-show-links').checked=cfg.showLinks;
+  document.getElementById('s-show-cal').checked=cfg.showCal;
+  document.getElementById('s-todo-h').value=cfg.todoH;
+  document.getElementById('s-links-cols').value=cfg.linksCols;
+  document.getElementById('s-weather-city').value=cfg.weatherCity;
+  document.getElementById('s-weather-units').value=cfg.weatherUnits;
+  document.getElementById('s-ical-url').value=cfg.icalUrl||'';
+  renderTzRows();
+  renderLinksEditor();
+}
+
+/* Live preview for colors & opacity */
+['s-grad-a','s-grad-b','s-grad-c','s-grad-d','s-accent'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{
+    const r=document.documentElement.style;
+    r.setProperty('--grad-a',document.getElementById('s-grad-a').value);
+    r.setProperty('--grad-b',document.getElementById('s-grad-b').value);
+    r.setProperty('--grad-c',document.getElementById('s-grad-c').value);
+    r.setProperty('--grad-d',document.getElementById('s-grad-d').value);
+    r.setProperty('--accent',document.getElementById('s-accent').value);
+  });
+});
+document.getElementById('s-opacity').addEventListener('input',e=>{
+  document.documentElement.style.setProperty('--glass',`rgba(255,255,255,${(e.target.value/100).toFixed(2)})`);
+});
+document.getElementById('s-todo-h').addEventListener('input',e=>{
+  document.documentElement.style.setProperty('--todo-h',e.target.value+'px');
+});
+document.getElementById('s-links-cols').addEventListener('input',e=>{
+  document.documentElement.style.setProperty('--links-cols',e.target.value);
+});
+
+/* Timezones */
+function renderTzRows() {
+  const container=document.getElementById('tz-rows'); container.innerHTML='';
+  (cfg.extraTz||[]).forEach((tz,i)=>{
+    const row=document.createElement('div'); row.className='tz-row';
+    row.innerHTML=`
+      <input type="text" value="${tz.label||''}" placeholder="Label (e.g. London)" data-i="${i}" data-f="label" />
+      <input type="text" value="${tz.zone||''}" placeholder="e.g. Europe/London" data-i="${i}" data-f="zone" />
+      <button class="tz-del" data-i="${i}">×</button>`;
+    row.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+      const idx=+e.target.dataset.i, field=e.target.dataset.f;
+      cfg.extraTz[idx][field]=e.target.value; renderExtraClocks();
+    }));
+    row.querySelector('.tz-del').addEventListener('click',e=>{
+      cfg.extraTz.splice(+e.target.dataset.i,1); renderTzRows(); renderExtraClocks();
+    });
+    container.appendChild(row);
+  });
+}
+
+document.getElementById('add-tz-btn').addEventListener('click',()=>{
+  if(!cfg.extraTz) cfg.extraTz=[];
+  cfg.extraTz.push({label:'',zone:''});
+  renderTzRows();
+});
+
+/* Links editor */
+function renderLinksEditor() {
+  const links=ls('nt_links',DEFAULT_LINKS);
+  const ed=document.getElementById('links-editor'); ed.innerHTML='';
+  links.forEach((l,i)=>{
+    const row=document.createElement('div'); row.className='link-edit-row';
+    row.innerHTML=`
+      <input type="color" class="link-swatch" value="${l.color}" data-i="${i}" />
+      <input type="text" value="${l.name}" placeholder="Name" data-i="${i}" data-f="name" style="width:80px" />
+      <input type="text" value="${l.url}" placeholder="URL" data-i="${i}" data-f="url" />
+      <button class="link-del-btn" data-i="${i}">×</button>`;
+    row.querySelector('[type=color]').addEventListener('input',e=>{ links[+e.target.dataset.i].color=e.target.value; ss('nt_links',links); renderLinks(); });
+    row.querySelectorAll('[data-f]').forEach(inp=>inp.addEventListener('input',e=>{ links[+e.target.dataset.i][e.target.dataset.f]=e.target.value; ss('nt_links',links); renderLinks(); }));
+    row.querySelector('.link-del-btn').addEventListener('click',e=>{ links.splice(+e.target.dataset.i,1); ss('nt_links',links); renderLinks(); renderLinksEditor(); });
+    ed.appendChild(row);
+  });
+}
+
+document.getElementById('add-link-settings-btn').addEventListener('click',()=>{
+  const links=ls('nt_links',DEFAULT_LINKS);
+  links.push({name:'New',url:'https://',color:COLORS[links.length%COLORS.length]});
+  ss('nt_links',links); renderLinks(); renderLinksEditor();
+});
+
+/* SAVE */
+document.getElementById('s-save-btn').addEventListener('click', async ()=>{
+  cfg.gradA=document.getElementById('s-grad-a').value;
+  cfg.gradB=document.getElementById('s-grad-b').value;
+  cfg.gradC=document.getElementById('s-grad-c').value;
+  cfg.gradD=document.getElementById('s-grad-d').value;
+  cfg.accent=document.getElementById('s-accent').value;
+  cfg.opacity=+document.getElementById('s-opacity').value;
+  cfg.font=document.getElementById('s-font').value;
+  cfg.showWeather=document.getElementById('s-show-weather').checked;
+  cfg.showTodo=document.getElementById('s-show-todo').checked;
+  cfg.showLinks=document.getElementById('s-show-links').checked;
+  cfg.showCal=document.getElementById('s-show-cal').checked;
+  cfg.todoH=+document.getElementById('s-todo-h').value;
+  cfg.linksCols=+document.getElementById('s-links-cols').value;
+  cfg.weatherUnits=document.getElementById('s-weather-units').value;
+  cfg.icalUrl=document.getElementById('s-ical-url').value.trim();
+
+  const newCity=document.getElementById('s-weather-city').value.trim();
+  if(newCity && newCity!==cfg.weatherCity) {
+    const geo=await geocodeCity(newCity);
+    if(geo){ cfg.weatherCity=geo.name; cfg.weatherLat=geo.lat; cfg.weatherLon=geo.lon; }
+    else cfg.weatherCity=newCity;
+  }
+
+  ss('nt_cfg',cfg);
+  applySettings();
+  loadWeather();
+  if(cfg.icalUrl) fetchIcal(cfg.icalUrl);
+
+  const btn=document.getElementById('s-save-btn');
+  btn.textContent='Saved ✓';
+  setTimeout(()=>btn.textContent='Save settings',1500);
+});
 </script>
 </body>
 </html>
